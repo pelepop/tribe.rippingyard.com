@@ -1,11 +1,28 @@
 <template>
   <div>
-    <Header></Header>
+    <nav
+      class="navbar header has-shadow"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <nuxt-link class="navbar-item" to="/">
+          PROJECT TEST
+        </nuxt-link>
+
+        <div class="navbar-burger">
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+    </nav>
+
     <section class="main-content columns">
-      <div class="container column is-7">
+      <div class="container column is-8">
         <nuxt />
       </div>
-      <div class="container column is-5">
+      <div class="container column is-4">
         <post title="Form"></post>
       </div>
     </section>
@@ -13,12 +30,10 @@
 </template>
 
 <script>
-import Header from '~/components/Header'
 import Post from '~/components/Post'
 
 export default {
   components: {
-    Header,
     Post
   },
   data() {

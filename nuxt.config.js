@@ -38,7 +38,7 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://buefy.github.io/#/documentation
-    'nuxt-buefy',
+    [ 'nuxt-buefy', { css: true } ],
     '@nuxtjs/pwa'
   ],
   /*
@@ -64,6 +64,10 @@ module.exports = {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+      }
+
+      config.node = {
+        fs: 'empty'
       }
     }
   }

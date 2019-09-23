@@ -1,34 +1,28 @@
 <template>
   <section class="section">
-    <div class="columns is-mobile">
-      <card title="Free" icon="github-circle">
-        Open source on <a href="https://github.com/buefy/buefy"> GitHub</a>
-      </card>
-
-      <card title="Responsive" icon="cellphone-link">
-        <b class="has-text-grey">Every</b> component is responsive
-      </card>
-
-      <card title="Modern" icon="alert-decagram">
-        Built with <a href="https://vuejs.org/">Vue.js</a> and
-        <a href="http://bulma.io/">Bulma</a>
-      </card>
-
-      <card title="Lightweight" icon="arrange-bring-to-front">
-        No other internal dependency
-      </card>
+    <div v-for="seed in seeds" :key="seed.id" class="content">
+      <p>
+        <strong>{{ seed.content }}</strong>
+      </p>
+      <p class="is-size-7">
+        Posted at {{ seed.createdate.format('YYYY-MM-DD HH:mm:ss') }}
+      </p>
     </div>
   </section>
 </template>
 
 <script>
-import Card from '~/components/Card'
+import Seed from '~/models/Seed'
+
+let seeds = new Seed()
+seeds = seeds.limit(8).orderBy('createdAt', 'desc')
 
 export default {
   name: 'HomePage',
-
-  components: {
-    Card
+  asyncData(context) {
+    return {
+      seeds: seeds.observedItems
+    }
   }
 }
 </script>
