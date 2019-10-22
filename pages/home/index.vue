@@ -14,9 +14,9 @@
             </div>
             <div class="media-content">
               <p class="title is-4">
-                {{ this.$store.state.auth.me.displayName }}
+                {{ me.displayName }}
               </p>
-              <p class="subtitle is-6">@johnsmith</p>
+              <p class="subtitle is-6">@{{ me.username }}</p>
               <ul>
                 <li>Post Entities</li>
                 <li>Entity Details</li>

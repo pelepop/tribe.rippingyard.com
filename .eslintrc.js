@@ -20,6 +20,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     "no-console": "off",
+    'no-unused-vars': 'off',
     'nuxt/no-cjs-in-config': 'off',
     'prettier/prettier': 'off'
   }

@@ -11,6 +11,23 @@ export default class Model {
     return this
   }
 
+  get() {
+    return new Promise((resolve, reject) => {
+      this.q.get().then(snapshot => {
+        if( !snapshot.empty ) {
+          snapshot.forEach(doc => {
+            // console.log(this.data(doc.data()))
+            resolve(this.data(doc.data()))
+          })
+        } else {
+          reject( new Error( 'No data found' ) )
+        }
+      }).catch((e) => {
+        console.log( new Error( e ) )
+      })
+    })
+  }
+
   get items() {
     const items = []
     this.q.get().then(snapshot => {

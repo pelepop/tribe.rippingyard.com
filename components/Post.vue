@@ -1,49 +1,63 @@
 <template>
-  <div v-if="isAuthenticated" class="column">
-    <div class="card">
-      <header class="card-header">
-        <p class="card-header-title has-text-grey">
-          {{ title }}
-        </p>
-      </header>
-      <div class="card-content">
-        <div class="content">
-          <b-field label="Topic" label-position="on-border">
-            <b-input v-model="label" maxlength="128"></b-input>
-          </b-field>
-          <b-field label="Comment" label-position="on-border">
-            <b-input
-              v-model="content"
-              maxlength="240"
-              type="textarea"
-            ></b-input>
-          </b-field>
-          <b-field>
-            <div v-if="previewImage">
-              <div>
-                <span @click="removeImage">x</span>
-                <img :src="previewImage" />
-              </div>
-            </div>
-            <b-upload v-model="image" drag-drop @input="upload">
-              <section class="section">
-                <div class="content has-text-centered">
-                  <p>
-                    <b-icon icon="upload" size="is-large"></b-icon>
-                  </p>
-                  <p>Drop your files here or click to upload</p>
+  <div v-if="isAuthenticated">
+    <ValidationObserver v-slot="{ invalid }">
+      <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <b-field label="Topic" label-position="on-border">
+              <b-input v-model="label" maxlength="128"></b-input>
+            </b-field>
+            <validation-provider
+                v-slot="{ errors }"
+                rules="required|max:240"
+                name="本文"
+              >
+              <b-field
+                label="Comment"
+                label-position="on-border"
+              >
+                <p>
+                  <b-input
+                  v-model="content"
+                  maxlength="240"
+                  type="textarea"
+                ></b-input>
+                </p>
+              </b-field>
+
+              <ul v-if="errors.length">
+                <li v-for="(error, i) in errors" :key="`errors${i}`">
+                  {{ error }}
+                </li>
+              </ul>
+            </validation-provider>
+            <b-field>
+              <div v-if="previewImage">
+                <div>
+                  <span @click="removeImage">x</span>
+                  <img :src="previewImage" />
                 </div>
-              </section>
-            </b-upload>
-          </b-field>
+              </div>
+              <b-upload v-model="image" drag-drop @input="upload">
+                <section class="section">
+                  <div class="content has-text-centered">
+                    <p>
+                      <b-icon icon="upload" size="is-large"></b-icon>
+                    </p>
+                    <p>Drop your files here or click to upload</p>
+                  </div>
+                </section>
+              </b-upload>
+            </b-field>
+          </div>
         </div>
+        <footer class="card-footer">
+          <div class="card-footer-item">
+            <b-button type="is-primary" :disabled="invalid" @click="post">Send</b-button>
+          </div>
+        </footer>
       </div>
-      <footer class="card-footer">
-        <div class="card-footer-item">
-          <b-button type="is-primary" @click="post">Send</b-button>
-        </div>
-      </footer>
-    </div>
+    </ValidationObserver>
   </div>
 </template>
 
@@ -75,6 +89,7 @@ export default {
   },
   methods: {
     post() {
+
       // const entity = new Entity()
       // entity.create({
       //   id: this.label,
@@ -89,6 +104,7 @@ export default {
 
       uploader(this.image)
       this.reset()
+
     },
     upload() {
       const reader = new FileReader()
@@ -107,8 +123,8 @@ export default {
     },
     reset() {
       this.content = ''
-      this.previewImage = null
       this.removeImage()
+      this.$emit('hideModal')
     }
   }
 }

@@ -1,6 +1,7 @@
 import { storage } from '~/plugins/firebase'
 
 export default function(file) {
+  if (file.size === undefined) return
   const storageRef = storage.ref()
   storageRef
     .child(file.name)

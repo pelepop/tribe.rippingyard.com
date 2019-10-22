@@ -1,14 +1,19 @@
 <template>
   <div>
-    <Header></Header>
+    <Header @showModal="showModal"></Header>
     <section class="main-content columns">
       <div class="container column is-7">
         <nuxt />
       </div>
       <div class="container column is-5">
-        <post title="Form"></post>
+        <button class="button is-primary is-medium" @click="showModal()">
+          Launch Modal
+        </button>
       </div>
     </section>
+    <b-modal :active.sync="isModalActive" :width="640" scroll="keep">
+      <post title="Form" @hideModal="hideModal"></post>
+    </b-modal>
   </div>
 </template>
 
@@ -23,6 +28,7 @@ export default {
   },
   data() {
     return {
+      isModalActive: false,
       items: [
         {
           title: 'Home',
@@ -35,6 +41,14 @@ export default {
           to: { name: 'signin' }
         }
       ]
+    }
+  },
+  methods: {
+    showModal() {
+      this.isModalActive = true
+    },
+    hideModal() {
+      this.isModalActive = false
     }
   }
 }

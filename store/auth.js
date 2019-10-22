@@ -1,3 +1,5 @@
+import User from '~/models/User'
+
 export const strict = false
 
 export const state = () => ({
@@ -5,8 +7,17 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setMe(state, user) {
-    state.me = user
+  setMe(state, u) {
+    const handle = new User()
+    const user = handle
+      .where('uid', '==', u.uid)
+      .get()
+      .then(( user ) => {
+        state.me = user
+      })
+      .catch(( e ) => {
+        console.log( u.uid, e )
+      })
   }
 }
 
