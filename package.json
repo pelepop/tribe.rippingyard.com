@@ -20,7 +20,7 @@
     "en-inflectors": "^1.0.12",
     "express": "^4.16.4",
     "firebase": "^6.4.2",
-    "log4js": "^5.1.0",
+    "log4js": "^6.4.0",
     "moment": "^2.24.0",
     "nuxt": "^2.4.0",
     "nuxt-buefy": "^0.3.15",
